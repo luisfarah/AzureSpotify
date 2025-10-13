@@ -1,0 +1,9 @@
+{
+	"name": "adf-spotifymx",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "40c4e3cb-8307-4030-9cab-dd0693e4f90e",
+		"tenantId": "e4c87d5b-c7eb-4b25-a21f-6b054c4eaafc"
+	}
+}
