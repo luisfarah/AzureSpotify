@@ -1,5 +1,5 @@
 {
-	"name": "Incremental_Ingestion_copy1",
+	"name": "Incremental_Ingestion_Loop",
 	"properties": {
 		"activities": [
 			{
@@ -8,6 +8,11 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.loop_input",
+						"type": "Expression"
+					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "AzureSqlToLake",
@@ -180,11 +185,11 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@pipeline().parameters.table",
+														"value": "@item().table",
 														"type": "Expression"
 													},
 													"file": {
-														"value": "@concat(pipeline().parameters.table,'_',variables('current'))",
+														"value": "@concat(item(),'_', variables('current'))",
 														"type": "Expression"
 													}
 												}
@@ -256,7 +261,10 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"container": "bronze",
-													"folder": "cdc",
+													"folder": {
+														"value": "@{item().table}_cdc",
+														"type": "Expression"
+													},
 													"file": "empty.json"
 												}
 											}
@@ -306,6 +314,35 @@
 										}
 									}
 								]
+							}
+						},
+						{
+							"name": "Web1",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "IfIncrementalData",
+									"dependencyConditions": [
+										"Succeeded",
+										"Skipped"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"url": "https://prod-20.centralus.logic.azure.com:443/workflows/f5bc655e413f4d9aa483a15f17fa2a0b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=YyBCll_yAcv_WS_GRK6Y2lVEdBdE1iUigizi4ah_1_o",
+								"body": {
+									"value": "{\n    \"pipeline_name\": \"@{pipeline().pipeline}\",\n    \"pipeline_runID\": \"@{pipeline().RunId}\"\n}",
+									"type": "Expression"
+								}
 							}
 						}
 					]
