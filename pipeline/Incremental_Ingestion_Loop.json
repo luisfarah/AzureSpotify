@@ -319,6 +319,8 @@
 						{
 							"name": "Web1",
 							"type": "WebActivity",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "IfIncrementalData",
