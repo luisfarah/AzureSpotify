@@ -323,8 +323,7 @@
 								{
 									"activity": "IfIncrementalData",
 									"dependencyConditions": [
-										"Succeeded",
-										"Skipped"
+										"Failed"
 									]
 								}
 							],
@@ -340,7 +339,7 @@
 								"method": "POST",
 								"url": "https://prod-20.centralus.logic.azure.com:443/workflows/f5bc655e413f4d9aa483a15f17fa2a0b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=YyBCll_yAcv_WS_GRK6Y2lVEdBdE1iUigizi4ah_1_o",
 								"body": {
-									"value": "{\n    \"pipeline_name\": \"@{pipeline().pipeline}\",\n    \"pipeline_runID\": \"@{pipeline().RunId}\"\n}",
+									"value": "{\n    \"pipeline_name\": \"@{pipeline().Pipeline}\",\n    \"pipeline_runID\": \"@{pipeline().RunId}\"\n}",
 									"type": "Expression"
 								}
 							}
