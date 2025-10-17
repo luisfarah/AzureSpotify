@@ -5,8 +5,8 @@ RESOURCE GROUP
 
 <img width="694" height="200" alt="image" src="https://github.com/user-attachments/assets/7123b734-6bcb-412a-93bc-9dc32f14af89" />
 
-
 DATA FACTORY
+
 <img width="514" height="200" alt="image" src="https://github.com/user-attachments/assets/e30362b0-875b-493e-931a-ec3a439b0bb6" />
 
 Creation of Data Factory Pipeline within a loop to iterate over a json list. Source is an azure sql database.
